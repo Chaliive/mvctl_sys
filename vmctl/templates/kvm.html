@@ -1,0 +1,290 @@
+<html>
+  <head>
+	    <script type="text/javascript" src="js/flask.js"></script>
+            <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/file.css')}}" />
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}"/>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/kvm.css') }}" />
+	<script>
+		var timeCounter = (function() {
+		var int;
+		var total = 3600;
+		return function(elemID) {
+		obj = document.getElementById(elemID);
+		var s = (total%60) < 10 ? ('0' + total%60) : total%60;
+		var h = total/3600 < 10 ? ('0' + parseInt(total/3600)) : parseInt(total/3600);
+		var m = (total-h*3600)/60 < 10 ? ('0' + parseInt((total-h*3600)/60)) : parseInt((total-h*3600)/60);
+		obj.innerHTML = h + ' : ' + m + ' : ' + s;
+		total--;
+		int = setTimeout("timeCounter('" + elemID + "')", 1000);
+		if(total < 0) clearTimeout(int);
+		}
+		})()
+		
+		</script>
+		<script type="text/javascript">
+			function disptime(){
+				var today =new Date();//获取当前时间
+				var yy =today.getFullYear();
+				var MM =today.getMonth()+1;
+				var dd =today.getDate();
+				var hh =today.getHours();//获得小时。分钟、秒
+				var mm = today.getMinutes();
+				var ss =today.getSeconds();
+				document.getElementById('mylock').innerHTML ='欢迎您的登录，当前时间是:'+yy+'年'+MM+'月'+dd+'日'+hh+'时'+mm+'分'+ss+'秒';
+			}
+			var mytime =setInterval('disptime()',1000)
+		</script>
+	<script>function opens(obj){
+	  for(var i = 1;i<=9;i++){
+	    if(i == obj){document.getElementById("dis"+i).style.display="block"
+	    }else
+	      document.getElementById("dis"+i).style.display="none"
+	    }
+	  }
+  </script>
+	<script type="text/javascript">
+		function left(obj){
+		for(var i = 1;i<=2;i++)
+  	  if(obj == i){
+			  if(document.getElementById("left-show"+i).style.display=="block"){
+			    document.getElementById("left-show"+i).style.display="none"
+	 	    }else
+				  document.getElementById("left-show"+i).style.display="block"
+		  }
+		}
+	</script>
+	<script type="text/javascript">
+		function open_win(){
+			window.open("http://192.168.1.202")
+		}
+	</script>
+	<title>欢迎来到虚拟机部署系统</title>
+	</head>
+	<body onLoad="timeCounter('timeCounter')">
+		<div class="main" id="kvm-main">
+			<!-- 导航栏 -->
+			<div class="head-kvm">
+				<div class="bar">
+					<div id="mylock"></div>
+					<table class="bars">
+						<tr>
+							<td><div id="timeCounter">01 : 00 : 00</div></td>
+							<td><input type="button" name="" id="" value="文件(F)" /></td>
+							<td><input type="button" name="" id="" value="编辑(E)" /></td>
+							<td><input type="button" name="" id="" value="查看(V)" /></td>
+							<td><input type="button" name="" id="" value="虚拟机(M)" /></td>
+							<td><input type="button" name="" id="" value="选项卡(T)" /></td>
+							<td><input type="button" name="" id="" value="帮助(H)" /></td>
+							<td>|</td>
+							<td>
+								<div class="dropdown">
+                                                                        <span><img src="{{ url_for('static', filename='pic/start.png') }}" style="height: 20px;w
+idth: 20px;"></span>
+                                                                        <div class="dropdown-content">
+                                                                                <div><input type="image" src="{{ url_for('static', filename='pic/开启.png') }}" 
+style="height: 20px;width: 20px;position: absolute;"/><input type="button" name="" id="" onclick="opens(8)" value="开启" /></div>
+                                                                                <div><input type="image" src="{{ url_for('static', filename='pic/关闭2.png') }}"
+ style="height: 20px;width: 20px;position: absolute;"/><input type="button" name="" id="" value="关闭" /></div>
+                                                                                <div><input type="image" src="{{ url_for('static', filename='pic/暂停.png') }}" 
+style="height: 20px;width: 20px;position: absolute;"/><input type="button" name="" id="" value="挂起" /></div>
+                                                                                <div><input type="image" src="{{ url_for('static', filename='pic/重启.png') }}" 
+style="height: 20px;width: 20px;position: absolute;"/><input type="button" name="" id="" value="重启" /></div>
+                                                                        </div>
+                                                                </div>
+							</td>
+							<td>|</td>
+							<td>
+								<div class="dropdown">
+									<span><input type="button" name="" id="" value="拍摄快照(P)" /></span>
+									<div class="dropdown-content">
+										<div>
+											<form action="/pqz" method="post">
+												<table border="0" cellspacing="" cellpadding="">
+													<tr><td><input type="text" name="vmname6" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+														<td><input type="submit" value="确定"/></td>
+													</tr>
+												</table>
+											</form>
+										</div>
+										<div></div>
+									</div>
+								</div>
+							</td>
+							<td>|</td>
+							<td>
+								<div class="dropdown">
+									<span><input type="button" name="" id="" value="恢复快照(R)" /></span>
+									<div class="dropdown-content">
+										<div>
+											<form action="/hfqz" method="post">
+												<table border="0" cellspacing="" cellpadding="">
+													<tr><td><input type="text" name="vmname7" style="width: 140px;" placeholder="请输入快照ID"/></td>
+														<td><input type="submit" value="确定"/></td>
+													</tr>
+												</table>
+											</form>
+										</div>
+										<div></div>
+									</div>
+								</div>
+							</td>
+							<td>|</td>
+							<td><a href="#" onclick="left(1)"><input type="button" name="" id="" value="页面放缩" /></a></td>
+							<td>|</td>
+						<!--	<td><div id="timeCounter1">01 : 00 : 00</div></td> -->
+						</tr>
+					</table>
+				</div>
+			</div>
+		  <div class="low-kvm">
+		  	<table border="0" cellspacing="" cellpadding="" class="below-kvm">
+		  		<tr>
+						<td>
+							<div id="left-show1" class="left-kvm1">
+								<div class="conduct">
+									<table>
+										<tr><td><a href="#" onclick="opens(1)"><button type="button">显示主机信息(M)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(2)"><button type="button">显示虚拟机信息(V)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(3)"><button type="button">克隆虚拟机(C)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(4)"><button type="button">挂起虚拟机(D)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(5)"><button type="button">创建虚拟机(S)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(6)"><button type="button">关闭虚拟机(B)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(7)"><button type="button">强制关闭虚拟机(F)</button></a></td></tr>
+										<tr><td><a href="#" onclick="opens(9)"><button type="button" style="background-color: #00CD00;color: white;">有问题</button></a></td></tr>
+									</table>
+								</div>
+								<div class="mvifno">
+									<div id="dis1">
+										<table border="" cellspacing="" cellpadding="">
+											<tr><td style="text-align: center;">主机信息</td></tr>
+											<tr><td>模型：{{ info[0] }}</td></tr>
+											<tr><td>内存大小：{{ info[1] }}</td></tr>
+											<tr><td>CPU数量：{{ info[2] }}个</td></tr>
+										</table>
+									</div>
+									<div id="dis2" style="overflow-y: scroll; height: 276px; width: auto;">
+										<div id="disl" style="display: block;">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td  style="text-align: center;background-color: #8A2BE2;color: white;height: 30px;">开启的虚拟机</td></tr>
+												{% for id_part,name_part in vms.items() %}
+												<tr><td style="background-color: #E6E6FA;padding-left: 20px;font-size: 18px;height: 30px;">{{ id_part }}: {{ name_part}}</td></tr>
+												{% endfor %}
+												<tr><td  style="text-align: center;background-color: #8A2BE2;color: white;height: 30px;">关闭的虚拟机</td></tr>
+												{% for i in vmd %}
+												<tr><td style="background-color: #E6E6FA;padding-left: 20px;font-size: 18px;height: 30px;">{{ i }}</td></tr>
+												{% endfor %}
+											</table>
+										</div>
+									</div>
+									<div id="dis3">
+										<form action="/kvm" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td><input type="text" name="vmname" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+												  <td><input type="submit" value="确定" /></td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div id="dis4">
+										<form action="/suspand" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td><input type="text" name="vmname2" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+													<td><input type="submit" value="确定"/></td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div id="dis5">
+										<form action="/create" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td><input type="text" name="vmname3" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+													<td><input type="submit" value="确定"/></td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div id="dis6">
+										<form action="/shutdown" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td><input type="text" name="vmname4" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+													<td><input type="submit" value="确定"/></td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div id="dis7">
+										<form action="/destroy" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td><input type="text" name="vmname5" style="width: 140px;" placeholder="请输入虚拟机名称"/></td>
+													<td><input type="submit" value="确定" onclick="return confirm('你确定要这么干？')"/></td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div id="dis9">
+										<div class="zhou" style="display: block;">
+											<div class="yong" style="display: block;height: 214px;width: 200px;background-color: white;overflow: auto;">
+												<table border="" cellspacing="" cellpadding="">
+													{% for i in msg %}
+													<tr><td style="background-color: #E6E6FA;padding-left: 20px;font-size: 18px;height: 30px;">{{ i }}</td></tr>
+													{% endfor %}
+												</table>
+											</div>
+											<div class="chuang" style="display: block;">
+												<form action="#" method="post">
+													<table border="0" cellspacing="" cellpadding="">
+														<tr><td><input type="text" name="vmname5" style="width: 194px;" placeholder="请输入你的问题"/></td></tr>
+														<tr><td><input type="submit" value="确定" style="width: 194px;"/></td></tr>
+													</table>
+													
+												</form>
+											</div>
+										</div>
+										<!-- <form action="/destroy" method="post">
+											<table border="0" cellspacing="" cellpadding="">
+												<tr><td style="text-align: -moz-left;"><input type="text" name="vmname6" style="width: 194px; height: 236px;overflow: auto;"/></td>
+													<td><input type="submit" value=""/></td>
+												</tr>
+												<tr>123
+													<form action="#" method="post">
+														<table border="" cellspacing="" cellpadding="">
+															<tr><td></td></tr>
+															<tr><td></td></tr>
+														</table>
+														<input type="submit" value=""/>
+													</form>
+												</tr>
+											</table>
+										</form> -->
+									</div>
+								  <div class="center-kvm" style="display: block;background-color: white;">
+								{{ msg }}
+								  	{{ msg2 }}
+								  	{{ msg3 }}
+								  	{{ msg4 }}
+								  	{{ msg5 }}
+										{{ msg6 }}
+									{{ message }}
+								  </div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="center-kvm">
+							</div>
+						</td>
+						<td style="height: 100%;width: 100%;background-color: #333333;">
+							<div class="right-kvm">
+								<div id="dis8">
+									<iframe name="import_frames" width=100% height=100% src="http://192.168.73.144:6080/vnc.
+html" frameborder=auto></iframe>
+								</div>
+							</div>
+						</td>
+					</tr>
+		  	</table>
+		  </div>
+		</div>
+	</body>
+</html>
